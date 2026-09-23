@@ -13,3 +13,4 @@ numpy>=1.26,<3
 pytesseract>=0.3.13,<1
 Pillow>=10,<13
 pytest>=8,<9
+psycopg2
