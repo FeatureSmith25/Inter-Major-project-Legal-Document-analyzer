@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Evidence-linked legal document analysis and comparison workspace.">
+  <link rel="icon" href="data:,">
+  <title>Lexi — Legal Document Intelligence</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script defer src="/assets/app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Lexi home">
+        <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4v22M8 9h16M9 9l-5 9h10L9 9Zm14 0-5 9h10L23 9ZM11 27h10"/></svg></span>
+        <span><strong>lexi</strong><small>LEGAL INTELLIGENCE</small></span>
+      </a>
+
+      <button class="workspace-picker" id="workspace-picker" type="button" aria-label="Connect or switch workspace" title="Connect or switch workspace"><span class="workspace-avatar">W</span><span class="workspace-copy"><strong>Workspace</strong><small id="workspace-label">Local workspace</small></span><span class="chevron">⌄</span></button>
+
+      <div class="side-label">WORKSPACE</div>
+      <nav class="primary-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-view="overview"><span class="nav-icon">▦</span>Overview</button>
+        <button class="nav-item" data-view="clauses"><span class="nav-icon">▤</span>Clauses</button>
+        <button class="nav-item" data-view="dates"><span class="nav-icon">▦</span>Important dates</button>
+        <button class="nav-item" data-view="attention"><span class="nav-icon">◇</span>Attention areas<span class="nav-count" id="attention-count">0</span></button>
+        <button class="nav-item" data-view="ask"><span class="nav-icon">⌕</span>Ask document</button>
+        <button class="nav-item" data-view="compare"><span class="nav-icon">⇄</span>Compare documents</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <button class="user-card" id="token-button"><span class="user-avatar">U</span><span><strong>Local user</strong><small id="token-status">Local mode</small></span><span class="more">•••</span></button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong id="breadcrumb-current">Overview</strong></div>
+        <div class="top-actions"><span class="secure-label"><span class="secure-dot"></span>Private workspace</span><button class="help-button" type="button" title="Help">?</button><button class="avatar-small" aria-label="Account">U</button></div>
+      </header>
+      <div id="toast-region" class="toast-region" aria-live="polite"></div>
+
+      <section class="view active" id="view-overview">
+        <div class="page-heading">
+          <div><div class="eyebrow" id="today-label">DOCUMENT WORKSPACE</div><h1>Good to see you<span class="heading-period">.</span></h1><p>Understand your documents. Find what matters.</p></div>
+        </div>
+
+        <div class="welcome-banner">
+          <div class="banner-copy"><div class="banner-kicker"><span class="sparkle">✳</span> YOUR DOCUMENT, MADE CLEAR</div><h2>Legal work, a little lighter.</h2><p>Get a clearer view of key terms, important dates, and areas to review.</p><button class="banner-link" id="banner-upload">Get started <span>→</span></button></div>
+          <div class="banner-art" aria-hidden="true"><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-sheet"><div class="art-sheet-head"><i></i><i></i><i></i></div><div class="art-line w-70"></div><div class="art-line w-50"></div><div class="art-highlight"></div><div class="art-line w-80"></div><div class="art-line w-45"></div><div class="art-stamp">LEXI<br><b>REVIEW</b></div></div><div class="art-spark s1">✦</div><div class="art-spark s2">✳</div><div class="art-spark s3">✧</div></div>
+        </div>
+
+        <div class="section-title-row"><div><h2>Your overview</h2><p>A quick look at what’s in your documents.</p></div><span class="live-pill"><i></i> LIVE</span></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-indigo">▤</span><span class="stat-label">DOCUMENTS</span></div><div class="stat-value" id="stat-documents">0</div><div class="stat-foot">In your workspace</div><div class="stat-decoration deco-indigo">▤</div></article>
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-teal">◇</span><span class="stat-label">CLAUSE TYPES</span></div><div class="stat-value" id="stat-clauses">—</div><div class="stat-foot">Found in selected document</div><div class="stat-decoration deco-teal">◇</div></article>
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-amber">◷</span><span class="stat-label">IMPORTANT DATES</span></div><div class="stat-value" id="stat-dates">—</div><div class="stat-foot">Found in selected document</div><div class="stat-decoration deco-amber">◷</div></article>
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon icon-rose">⚑</span><span class="stat-label">REVIEW PROMPTS</span></div><div class="stat-value" id="stat-attention">—</div><div class="stat-foot">For your consideration</div><div class="stat-decoration deco-rose">⚑</div></article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel document-panel">
+            <div class="panel-heading"><div><h2 id="document-title">Start with a document</h2><p id="document-subtitle">Upload a PDF or Word document to get started.</p></div><button class="more-button" aria-label="More options">•••</button></div>
+            <div id="document-content" class="document-content">
+              <div class="empty-upload" id="dropzone"><div class="upload-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5 5 5M4 16v3h16v-3"/></svg></div><strong>Drop a document here</strong><span>or <button id="choose-file" class="text-button">browse files</button> to upload</span><small>PDF or DOCX · Up to 25 MB</small></div>
+            </div>
+          </section>
+          <section class="panel recent-panel"><div class="panel-heading"><div><h2>Recent documents</h2><p>Pick up where you left off.</p></div><button class="text-button" data-navigate="history">View all <span>→</span></button></div><div id="recent-documents" class="recent-documents"><div class="empty-recent">No documents yet. Upload one to begin.</div></div></section>
+        </div>
+        <footer class="disclaimer"><span class="disclaimer-icon">ⓘ</span><span><strong>A helpful heads-up</strong> Lexi provides document analysis assistance, not legal advice. Always consult a qualified legal professional for advice.</span></footer>
+      </section>
+
+      <section class="view" id="view-clauses"><div class="page-heading compact"><div><div class="eyebrow">DOCUMENT ANALYSIS</div><h1>Clauses</h1><p>Common clause types found in your selected document.</p></div></div><div id="clauses-view" class="stacked-panels"></div></section>
+      <section class="view" id="view-dates"><div class="page-heading compact"><div><div class="eyebrow">DOCUMENT ANALYSIS</div><h1>Important dates</h1><p>Dates and their surrounding source text.</p></div></div><div id="dates-view" class="stacked-panels"></div></section>
+      <section class="view" id="view-attention"><div class="page-heading compact"><div><div class="eyebrow">DOCUMENT ANALYSIS</div><h1>Attention areas</h1><p>Text-based prompts that may be useful to review.</p></div></div><div id="attention-view" class="stacked-panels"></div></section>
+      <section class="view" id="view-ask"><div class="page-heading compact"><div><div class="eyebrow">EVIDENCE-BASED Q&amp;A</div><h1>Ask your document</h1><p>Answers are grounded in retrieved passages from the selected document.</p></div></div><section class="panel ask-panel"><div id="chat-messages" class="chat-messages"><div class="chat-welcome"><span class="chat-orb">✳</span><h2>What would you like to know?</h2><p>Ask about obligations, dates, or specific terms. Answers include source citations.</p><div class="suggestions"><button class="suggestion">What are the payment terms?</button><button class="suggestion">How can this agreement end?</button><button class="suggestion">Does it renew automatically?</button></div></div></div><form id="ask-form" class="ask-form"><input id="question-input" type="text" maxlength="2000" placeholder="Ask a question about this document…" autocomplete="off"><button class="send-button" type="submit" aria-label="Send question">↑</button></form><div class="ask-footnote">Answers are based on document evidence and may not capture the full context.</div></section></section>
+      <section class="view" id="view-compare"><div class="page-heading compact"><div><div class="eyebrow">SIDE-BY-SIDE REVIEW</div><h1>Compare documents</h1><p>See text changes between two versions, with source locators.</p></div></div><section class="panel compare-panel"><div class="compare-upload-grid"><label class="compare-drop" for="compare-a"><span class="compare-file-icon">A</span><strong>Document A <small>OLD VERSION</small></strong><span class="compare-file-name" id="compare-a-name">Choose a PDF or DOCX</span><input id="compare-a" type="file" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></label><div class="compare-arrow">→</div><label class="compare-drop" for="compare-b"><span class="compare-file-icon file-b">B</span><strong>Document B <small>NEW VERSION</small></strong><span class="compare-file-name" id="compare-b-name">Choose a PDF or DOCX</span><input id="compare-b" type="file" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></label></div><button class="button button-primary compare-button" id="compare-button" disabled>Compare versions <span>→</span></button><div id="compare-results" class="compare-results"></div><div class="compare-note">Text differences only. The comparison does not determine legal effect or whether a change is favorable.</div></section></section>
+      <section class="view" id="view-history"><div class="page-heading compact"><div><div class="eyebrow">YOUR WORKSPACE</div><h1>Document history</h1><p>Documents you’ve uploaded to this workspace.</p></div><button class="button button-primary" id="history-upload">＋ Upload document</button></div><section class="panel history-panel"><div id="full-history" class="full-history"></div></section></section>
+    </main>
+  </div>
+
+  <input id="file-input" type="file" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+  <dialog id="token-dialog" class="token-dialog"><form method="dialog"><button class="dialog-close" aria-label="Close">×</button></form><div class="dialog-lock">⌑</div><h2>Connect or switch workspace</h2><p>Enter an access token for the workspace you want to open. The token stays in this browser tab.</p><label for="token-input">Bearer token</label><input id="token-input" type="password" autocomplete="off" placeholder="Paste access token"><div class="dialog-actions"><button class="button button-quiet" id="clear-token" type="button">Clear token</button><button class="button button-primary" id="save-token" type="button">Save token</button></div></dialog>
+</body>
+</html>
