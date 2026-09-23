@@ -41,6 +41,16 @@ uvicorn app.main:app --reload
 
 Open `http://127.0.0.1:8000` for the dashboard. The API health check is `http://127.0.0.1:8000/health`; interactive API documentation is at `http://127.0.0.1:8000/docs`.
 
+## Deploy on Vercel
+
+The project is configured for Vercel's Python runtime. Import the GitHub repository in Vercel and deploy from the project root. The dashboard is served by FastAPI, and `vercel.json` includes the `frontend/` assets in the function bundle.
+
+Before deploying, create a persistent PostgreSQL database and add its SQLAlchemy URL to the Vercel project's environment variables as `DATABASE_URL` (for example, `postgresql+psycopg://...`). Do not use the default SQLite URL in production: Vercel function filesystems are temporary, so SQLite data can disappear and may differ between function instances.
+
+Add `LLM_BASE_URL`, `LLM_API_KEY`, and `LLM_MODEL` in Vercel if generated chat answers are needed. Configure `USER_TOKENS_JSON` to require bearer tokens; otherwise the app runs in single-user local mode. Never commit `.env` or paste secrets into source files. Scanned-document OCR requires a Tesseract executable and is not enabled by default.
+
+After setting the environment variables, redeploy so the function starts with the production configuration. Verify the deployment at `/health`, then upload a test document and confirm it remains available after a new deployment.
+
 ## Configuration
 
 Copy `.env.example` to `.env` and set values as needed:
